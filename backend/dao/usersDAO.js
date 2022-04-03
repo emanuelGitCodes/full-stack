@@ -33,4 +33,37 @@ export default class UsersDAO {
     }
   } // End of addUser()
 
+  static async getUsers({ filters = null }) { // get all users data.
+
+    let query
+    if (filters) {
+      if ("users" in filters) {
+        query = { $text: { $search: filters['users'] } }
+      }
+    }
+
+    let cursor
+
+    try {
+      cursor = await user.find(query)
+
+    } catch (error) {
+      console.error(`Unable to post review: ${error}`)
+      return { usersList: [], totalNumUsers: 0 }
+    }
+
+    try {
+      const usersList = await cursor.toArray()
+      const totalNumUsers = await user.countDocuments(query)
+
+      return { usersList, totalNumUsers }
+
+    } catch (error) {
+      console.error(`Unable to convert cursor to array or problem counting documents, ${error}`)
+      return { restaurantsList: [], totalNumRestaurants: 0 }
+    }
+
+
+  } // End of addUser()
+
 } // end of class UsersDAO()

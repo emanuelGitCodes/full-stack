@@ -3,10 +3,12 @@ import UsersCtrl from './users.controller.js'
 
 const router = express.Router()
 
-router.route('/')
+router.route('/test')
+  .get(UsersCtrl.apiGetUsers)
 
 router
-  .route('/user')
+  .route('/users')
+  .get(UsersCtrl.apiGetUsers)
   .post(UsersCtrl.apiPostUser)
 
 export default router
