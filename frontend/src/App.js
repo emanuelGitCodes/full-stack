@@ -13,7 +13,7 @@ const TestData = props => {
   }, [])
 
   const getUsers = async () => {
-    const response = await fetch(url)
+    const response = await fetch('http://localhost:5050/api/v1/users')
     const user = await response.json()
     setUser(user.users_list)
   }
